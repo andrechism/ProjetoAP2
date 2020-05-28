@@ -1,9 +1,5 @@
 package ProjetoAP2;
 
-/**
- *
- * @author Ygor
- */
 public class Cadastro {
     private int posicaoArray;
     private int id;

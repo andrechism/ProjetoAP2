@@ -1,6 +1,7 @@
 package ProjetoAP2;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -16,10 +17,10 @@ public class Main {
             onMenu = true;
             System.out.println("-------------------------------");
             System.out.println("1 - Buscar Usuário");
-            System.out.println("2 - Listar Usuários");
+            System.out.println("2 - Acessar Usuário");
             System.out.println("3 - Cadastrar Usuário");
             System.out.println("4 - Editar Usuário");
-            System.out.println("5 - Acessar Usuário");
+            System.out.println("5 - Listar Usuários");
             System.out.println("6 - Sair");
             System.out.println("-------------------------------");
             
@@ -33,6 +34,7 @@ public class Main {
                     }
                     System.out.println("Digite o nome do usuário: ");
                     String buscar = input.next();
+               
                     for(int i = 0; i < usuario.size(); i++){
                         Cadastro idCadastro = usuario.get(i);
                         if(idCadastro.getNome().equalsIgnoreCase(buscar)){
@@ -41,6 +43,7 @@ public class Main {
                             for(int j = 0; j < CF.familia.size(); j++){
                                 Pessoa idPessoa = CF.familia.get(j);
                                 if(idPessoa.getUsuarioSelecionado() == idCadastro.getID()){
+                                    System.out.println("\n________________________________");
                                     System.out.println("Nome: " + idPessoa.getNome() + " " + idPessoa.getSobrenome());
                                     System.out.println("Data de Nascimento: " + idPessoa.getDia() + "/" + idPessoa.getMes() + "/" + idPessoa.getAno());
                                     System.out.println("CPF: " + idPessoa.getCpf());
@@ -60,8 +63,25 @@ public class Main {
                     }
                     for(int i = 0; i < usuario.size(); i++){
                         Cadastro idCadastro = usuario.get(i);
-                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome() + " Posição: " + idCadastro.getPosicaoArray());
+                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome());
                     }
+                    System.out.println("Selecione o Usuário:");
+                    
+                    try{
+                        int usuarioSelecionado = input.nextInt();
+                        for(int i = 0; i < usuario.size(); i++){
+                            Cadastro idCadastro = usuario.get(i);
+                            if(idCadastro.getID() == usuarioSelecionado){
+                                CF.cadastrarFamilia(usuarioSelecionado);
+                                break;
+                            }
+                        }
+                    } catch(InputMismatchException e) {
+                        System.out.println("Utilize o ID para selecionar o usuário.");
+                        break;
+                    }
+                    
+                    System.out.println("Usuário não existente!");
                     break;
                 case '3':
                     System.out.print("Digite o nome do usuário a ser adicionado: ");
@@ -128,18 +148,23 @@ public class Main {
                                         break;
                                 }
                             } while(subMenu);
+                            
+                        }else{
+                            System.out.println("Usuário não existente!");
+                            break;
                         }
                     }
+                    
                     break;
                 case '5':
+                    if(usuario.isEmpty()){
+                        System.out.println("Não há usuários cadastrados!");
+                        break;
+                    }
                     for(int i = 0; i < usuario.size(); i++){
                         Cadastro idCadastro = usuario.get(i);
-                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome());
+                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome() + " Posição: " + idCadastro.getPosicaoArray());
                     }
-                    System.out.println("Selecione o Usuário:");
-                    int usuarioSelecionado = input.nextInt();
-                    CF.cadastrarFamilia(usuarioSelecionado);
-                    
                     break;
                 case '6':
                     System.out.println("Saindo do programa...");
