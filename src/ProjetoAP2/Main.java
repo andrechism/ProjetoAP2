@@ -8,6 +8,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         ArrayList<Cadastro> usuario = new ArrayList();
+        CadastroFamilia CF = new CadastroFamilia();
+        
+        
         boolean onMenu;
         do{
             onMenu = true;
@@ -16,7 +19,8 @@ public class Main {
             System.out.println("2 - Listar Usuários");
             System.out.println("3 - Cadastrar Usuário");
             System.out.println("4 - Editar Usuário");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Acessar Usuário");
+            System.out.println("6 - Sair");
             System.out.println("-------------------------------");
             
             char op = input.next().charAt(0);
@@ -34,6 +38,14 @@ public class Main {
                         if(idCadastro.getNome().equalsIgnoreCase(buscar)){
                             System.out.println("ID: " + idCadastro.getID());
                             System.out.println("Nome: " + idCadastro.getNome());
+                            for(int j = 0; j < CF.familia.size(); j++){
+                                Pessoa idPessoa = CF.familia.get(j);
+                                if(idPessoa.getUsuarioSelecionado() == idCadastro.getID()){
+                                    System.out.println("Nome: " + idPessoa.getNome() + " " + idPessoa.getSobrenome());
+                                    System.out.println("Data de Nascimento: " + idPessoa.getDia() + "/" + idPessoa.getMes() + "/" + idPessoa.getAno());
+                                    System.out.println("CPF: " + idPessoa.getCpf());
+                                }
+                            }
                             break;
                         }
                         if(i == usuario.size() - 1){
@@ -48,13 +60,15 @@ public class Main {
                     }
                     for(int i = 0; i < usuario.size(); i++){
                         Cadastro idCadastro = usuario.get(i);
-                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome());
+                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome() + " Posição: " + idCadastro.getPosicaoArray());
                     }
                     break;
                 case '3':
-                    System.out.println("Digite o nome do usuário a ser adicionado: ");
+                    System.out.print("Digite o nome do usuário a ser adicionado: ");
                     String nome = input.next();
-                    usuario.add(new Cadastro(usuario.size(), nome));
+                    System.out.print("Digite o número de identificação: ");
+                    int id = input.nextInt();
+                    usuario.add(new Cadastro(id, nome, usuario.size()));
                     System.out.println("Usuário " + nome + " adicionado com sucesso!");
                     break;
                 case '4':
@@ -67,7 +81,7 @@ public class Main {
                     for(int i = 0; i < usuario.size(); i++){
                         Cadastro idCadastro = usuario.get(i);
                         if(idCadastro.getNome().equalsIgnoreCase(buscar)){
-                            boolean subMenu = false;
+                            boolean subMenu;
                             do{
                                 subMenu = true;
                                 idCadastro = usuario.get(i);
@@ -95,7 +109,7 @@ public class Main {
                                         }
                                         break;
                                     case '2':
-                                        System.out.println("Confirmar deleção do usuário?");
+                                        System.out.println("Confirmar remoção do usuário?");
                                         System.out.println("1 - Sim");
                                         System.out.println("2 - Não");
                                         op = input.next().charAt(0);
@@ -118,6 +132,16 @@ public class Main {
                     }
                     break;
                 case '5':
+                    for(int i = 0; i < usuario.size(); i++){
+                        Cadastro idCadastro = usuario.get(i);
+                        System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome());
+                    }
+                    System.out.println("Selecione o Usuário:");
+                    int usuarioSelecionado = input.nextInt();
+                    CF.cadastrarFamilia(usuarioSelecionado);
+                    
+                    break;
+                case '6':
                     System.out.println("Saindo do programa...");
                     onMenu = false;
                     break;
