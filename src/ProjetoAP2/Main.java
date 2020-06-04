@@ -12,10 +12,12 @@ public class Main {
         CadastroFamilia CF = new CadastroFamilia();
         
         
-        boolean onMenu;
+        boolean onMenu = false;
         do{
+            if(onMenu) input.nextLine(); //limpar teclado
+            
             onMenu = true;
-            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");                          //menu de cadastro do usuário
             System.out.println("1 - Buscar Usuário");
             System.out.println("2 - Acessar Usuário");
             System.out.println("3 - Cadastrar Usuário");
@@ -27,7 +29,7 @@ public class Main {
             char op = input.next().charAt(0);
             
             switch(op){
-                case '1':
+                case '1':                                                                   //1 - Buscar Usuário
                     if(usuario.isEmpty()){
                         System.out.println("Não há usuários cadastrados!");
                         break;
@@ -56,7 +58,7 @@ public class Main {
                         }                     
                     }
                     break;
-                case '2': 
+                case '2':                                                                   //2 - Acessar Usuário
                     if(usuario.isEmpty()){
                         System.out.println("Não há usuários cadastrados!");
                         break;
@@ -73,7 +75,7 @@ public class Main {
                             Cadastro idCadastro = usuario.get(i);
                             if(idCadastro.getID() == usuarioSelecionado){
                                 CF.cadastrarFamilia(usuarioSelecionado);
-                                break;
+                                //break;
                             }
                         }
                     } catch(InputMismatchException e) {
@@ -83,7 +85,7 @@ public class Main {
                     
                     System.out.println("Usuário não existente!");
                     break;
-                case '3':
+                case '3':                                                                   //3 - Cadastrar Usuário
                     System.out.print("Digite o nome do usuário a ser adicionado: ");
                     String nome = input.next();
                     System.out.print("Digite o número de identificação: ");
@@ -91,7 +93,7 @@ public class Main {
                     usuario.add(new Cadastro(id, nome, usuario.size()));
                     System.out.println("Usuário " + nome + " adicionado com sucesso!");
                     break;
-                case '4':
+                case '4':                                                                   //4 - Editar Usuário
                     if(usuario.isEmpty()){
                         System.out.println("Não há usuários cadastrados!");
                         break;
@@ -156,7 +158,7 @@ public class Main {
                     }
                     
                     break;
-                case '5':
+                case '5':                                                                   //5 - Listar Usuários
                     if(usuario.isEmpty()){
                         System.out.println("Não há usuários cadastrados!");
                         break;
@@ -166,7 +168,7 @@ public class Main {
                         System.out.println("ID: " + idCadastro.getID() + " Nome: " + idCadastro.getNome() + " Posição: " + idCadastro.getPosicaoArray());
                     }
                     break;
-                case '6':
+                case '6':                                                                   //6 - Sair
                     System.out.println("Saindo do programa...");
                     onMenu = false;
                     break;
